@@ -5,15 +5,6 @@ import { collections } from "./src/lib/payload/collections.ts";
 
 export default buildConfig({
   admin: {
-    components: {
-      views: {
-        dashboard: {
-          Component: {
-            path: "/src/components/payload/well-nice-dashboard.tsx"
-          }
-        }
-      }
-    },
     dateFormat: "dd MMM yyyy",
     user: "admins",
     meta: {

@@ -1,15 +1,5 @@
 import type { CollectionConfig, Field } from "payload";
 
-const groups = {
-  operations: "1. Operations",
-  members: "2. Members",
-  community: "3. Community",
-  editorial: "4. Editorial",
-  concierge: "5. Concierge",
-  commerce: "6. Drops & Benefits",
-  system: "9. System"
-} as const;
-
 const statusOptions = {
   waitlist: [
     { label: "New application", value: "new" },
@@ -87,7 +77,6 @@ export const Admins: CollectionConfig = {
   admin: {
     defaultColumns: ["email", "name", "role", "updatedAt"],
     description: "People who can access and operate the Well Nice CMS.",
-    group: groups.system,
     useAsTitle: "email"
   },
   fields: [
@@ -123,7 +112,6 @@ export const Waitlist: CollectionConfig = {
   admin: {
     defaultColumns: ["name", "email", "location", "status", "createdAt"],
     description: "Review people who have asked to join before they are invited to pay.",
-    group: groups.operations,
     listSearchableFields: ["name", "email", "location", "instagram", "reason"],
     useAsTitle: "email"
   },
@@ -164,7 +152,6 @@ export const Members: CollectionConfig = {
   admin: {
     defaultColumns: ["name", "email", "membershipStatus", "plan", "location", "onboardingComplete"],
     description: "Paid member records synced from Clerk and Stripe.",
-    group: groups.members,
     listSearchableFields: ["name", "email", "location", "bio"],
     useAsTitle: "email"
   },
@@ -253,7 +240,6 @@ export const Media: CollectionConfig = {
   admin: {
     defaultColumns: ["filename", "alt", "updatedAt"],
     description: "Shared image and file library for journal, spaces, recommendations, events, and drops.",
-    group: groups.system,
     useAsTitle: "filename"
   },
   fields: [
@@ -277,7 +263,6 @@ export const Spaces: CollectionConfig = {
   admin: {
     defaultColumns: ["title", "visibility", "order", "updatedAt"],
     description: "The member rooms that structure the community experience.",
-    group: groups.community,
     listSearchableFields: ["title", "description"],
     useAsTitle: "title"
   },
@@ -311,7 +296,6 @@ export const Posts: CollectionConfig = {
   admin: {
     defaultColumns: ["title", "space", "author", "status", "featured", "pinned", "updatedAt"],
     description: "Member posts and editorially featured community discussions.",
-    group: groups.community,
     listSearchableFields: ["title", "body"],
     useAsTitle: "title"
   },
@@ -365,7 +349,6 @@ export const Comments: CollectionConfig = {
   admin: {
     defaultColumns: ["post", "author", "status", "updatedAt"],
     description: "Nested member comments with basic moderation controls.",
-    group: groups.community,
     useAsTitle: "body"
   },
   fields: [
@@ -395,7 +378,6 @@ export const Journal: CollectionConfig = {
   admin: {
     defaultColumns: ["title", "category", "visibility", "publishedAt", "updatedAt"],
     description: "Editorial articles, guides, interviews, playlists, city guides, and member stories.",
-    group: groups.editorial,
     listSearchableFields: ["title", "excerpt", "body"],
     useAsTitle: "title"
   },
@@ -433,7 +415,6 @@ export const Events: CollectionConfig = {
   admin: {
     defaultColumns: ["title", "date", "location", "status", "visibility"],
     description: "Meetups, walks, talks, studio visits, online sessions, and product launches.",
-    group: groups.editorial,
     listSearchableFields: ["title", "location", "description"],
     useAsTitle: "title"
   },
@@ -469,7 +450,6 @@ export const Recommendations: CollectionConfig = {
   admin: {
     defaultColumns: ["title", "category", "location", "approved", "submittedBy", "updatedAt"],
     description: "Curated places, products, books, music, objects, culture, and independent brands.",
-    group: groups.editorial,
     listSearchableFields: ["title", "category", "location", "description"],
     useAsTitle: "title"
   },
@@ -517,7 +497,6 @@ export const ConciergeRequests: CollectionConfig = {
   admin: {
     defaultColumns: ["member", "category", "location", "status", "reviewStatus", "updatedAt"],
     description: "Member requests that need AI drafting and human review before sending.",
-    group: groups.operations,
     listSearchableFields: ["request", "category", "location", "budget", "finalResponse"],
     useAsTitle: "request"
   },
@@ -574,7 +553,6 @@ export const ConciergeKnowledgeBase: CollectionConfig = {
   admin: {
     defaultColumns: ["title", "category", "location", "sourceType", "approved", "updatedAt"],
     description: "Approved knowledge that helps the Concierge sound selective, local, and Well Nice.",
-    group: groups.concierge,
     listSearchableFields: ["title", "category", "location", "description", "whyItsWellNice"],
     useAsTitle: "title"
   },
@@ -616,7 +594,6 @@ export const Drops: CollectionConfig = {
   admin: {
     defaultColumns: ["title", "visibility", "discountCode", "startDate", "endDate"],
     description: "Early access, discount codes, partner offers, hidden products, and limited releases.",
-    group: groups.commerce,
     listSearchableFields: ["title", "description", "discountCode"],
     useAsTitle: "title"
   },
@@ -650,7 +627,6 @@ export const Reports: CollectionConfig = {
   admin: {
     defaultColumns: ["contentType", "contentId", "reporter", "status", "updatedAt"],
     description: "Reports from members that need moderator review.",
-    group: groups.operations,
     useAsTitle: "reason"
   },
   fields: [

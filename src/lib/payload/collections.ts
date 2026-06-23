@@ -307,7 +307,7 @@ export const Posts: CollectionConfig = {
           label: "Post",
           fields: [
             { name: "title", type: "text", required: true },
-            { name: "body", type: "textarea", required: true, admin: { rows: 10 } },
+            { name: "body", type: "richText", required: true },
             { name: "author", type: "relationship", relationTo: "members", required: true },
             { name: "space", type: "relationship", relationTo: "spaces", required: true },
             { name: "images", type: "array", fields: [{ name: "image", type: "upload", relationTo: "media" }] }
@@ -372,37 +372,89 @@ export const Comments: CollectionConfig = {
 export const Journal: CollectionConfig = {
   slug: "journal",
   labels: {
-    singular: "Journal entry",
-    plural: "Journal"
+    singular: "Post",
+    plural: "Posts"
   },
   admin: {
-    defaultColumns: ["title", "category", "visibility", "publishedAt", "updatedAt"],
-    description: "Editorial articles, guides, interviews, playlists, city guides, and member stories.",
-    listSearchableFields: ["title", "excerpt", "body"],
+    defaultColumns: ["title", "category", "publishedAt", "updatedAt"],
+    description: "Editorial posts, guides, interviews, playlists, city guides, and member stories.",
+    listSearchableFields: ["title", "excerpt", "metaTitle", "metaDescription"],
     useAsTitle: "title"
   },
   fields: [
-    { name: "title", type: "text", required: true, admin: { placeholder: "A city guide to Margate without the obvious bits" } },
-    slugField,
-    { name: "excerpt", type: "textarea", required: true, admin: { description: "Short standfirst shown in lists.", rows: 3 } },
-    { name: "heroImage", type: "upload", relationTo: "media" },
-    { name: "body", type: "textarea", required: true, admin: { rows: 14 } },
     {
-      name: "category",
-      type: "select",
-      options: [
-        { label: "Article", value: "article" },
-        { label: "Interview", value: "interview" },
-        { label: "Guide", value: "guide" },
-        { label: "Playlist", value: "playlist" },
-        { label: "City guide", value: "city-guide" },
-        { label: "Member story", value: "member-story" }
-      ],
-      required: true
-    },
-    tagsField,
-    { name: "visibility", type: "select", defaultValue: "members", options: statusOptions.visibility.slice(0, 2) },
-    { name: "publishedAt", type: "date", admin: { description: "Leave empty while drafting." } }
+      type: "tabs",
+      tabs: [
+        {
+          label: "Content",
+          fields: [
+            {
+              name: "title",
+              type: "text",
+              required: true,
+              label: "Post Title",
+              admin: { placeholder: "Payload: The best way to build something you truly own" }
+            },
+            slugField,
+            {
+              name: "excerpt",
+              type: "textarea",
+              required: true,
+              admin: { description: "Short standfirst shown in lists and previews.", rows: 3 }
+            },
+            {
+              name: "category",
+              type: "select",
+              options: [
+                { label: "Article", value: "article" },
+                { label: "Interview", value: "interview" },
+                { label: "Guide", value: "guide" },
+                { label: "Playlist", value: "playlist" },
+                { label: "City guide", value: "city-guide" },
+                { label: "Member story", value: "member-story" }
+              ],
+              required: true
+            },
+            { name: "body", type: "richText", required: true, label: "Content" },
+            tagsField
+          ]
+        },
+        {
+          label: "Appearance",
+          fields: [
+            {
+              name: "heroImage",
+              type: "upload",
+              relationTo: "media",
+              label: "Banner Image",
+              required: true
+            },
+            { name: "visibility", type: "select", defaultValue: "members", options: statusOptions.visibility.slice(0, 2) },
+            { name: "publishedAt", type: "date", admin: { description: "Leave empty while drafting." } }
+          ]
+        },
+        {
+          label: "SEO",
+          fields: [
+            {
+              name: "metaTitle",
+              type: "text",
+              admin: {
+                description: "Optional override for browser title and sharing cards."
+              }
+            },
+            {
+              name: "metaDescription",
+              type: "textarea",
+              admin: {
+                description: "Optional short description for search and social previews.",
+                rows: 3
+              }
+            }
+          ]
+        }
+      ]
+    }
   ]
 };
 

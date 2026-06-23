@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { parseJson, postSchema, readRequestBody } from "@/lib/api";
 import { requireApiMember } from "@/lib/member-access";
 import { PayloadNotConfiguredError, getPayloadClient } from "@/lib/payload/client";
+import { plainTextToLexical } from "@/lib/payload/format";
 
 export async function POST(request: Request) {
   const body = await readRequestBody(request);
@@ -40,7 +41,7 @@ export async function POST(request: Request) {
       collection: "posts",
       data: {
         title: parsed.data.title,
-        body: parsed.data.body,
+        body: plainTextToLexical(parsed.data.body),
         author: memberResult.member.id,
         space: spaceRecord.id,
         status: "published",

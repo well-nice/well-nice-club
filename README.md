@@ -37,9 +37,10 @@ Set `DATABASE_URL` and `PAYLOAD_SECRET` in `.env.local` before running Payload l
 
 ## Payload notes
 
-`payload.config.ts` and `src/lib/payload/collections.ts` intentionally keep the CMS minimal for now:
+`payload.config.ts` and `src/lib/payload/collections.ts` define the CMS collections the current app and design imply:
 
-- `admins` - authenticated Payload admin users
-- `waitlist` - applications submitted from the public waitlist form
+- `admins`, `waitlist`, `members`, `spaces`, `posts`, `comments`
+- `journal`, `events`, `recommendations`, `concierge-requests`, `concierge-knowledge-base`
+- `drops`, `reports`, and `media`
 
 Payload uses `DATABASE_URL` for Postgres and `PAYLOAD_SECRET` for auth/session security. `PAYLOAD_DB_PUSH=true` can be used intentionally when pushing the Payload schema to a database.

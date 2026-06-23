@@ -1,7 +1,7 @@
 import { postgresAdapter } from "@payloadcms/db-postgres";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { buildConfig } from "payload";
-import { collections } from "@/lib/payload/collections";
+import { collections } from "./src/lib/payload/collections.ts";
 
 export default buildConfig({
   admin: {

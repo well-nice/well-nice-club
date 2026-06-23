@@ -33,7 +33,7 @@ Set the environment values in `.env.local` before enabling live auth, billing, C
 
 ## API routes
 
-- `POST /api/waitlist`
+- `POST /api/app/waitlist` - public product waitlist submission endpoint
 - `POST /api/onboarding`
 - `POST /api/posts`
 - `POST /api/comments`
@@ -42,7 +42,7 @@ Set the environment values in `.env.local` before enabling live auth, billing, C
 - `POST /api/stripe/create-checkout-session`
 - `POST /api/stripe/create-portal-session`
 - `POST /api/stripe/webhook`
-- `/api/[...slug]` - Payload REST API
+- `/api/[...slug]` - Payload REST API, including protected collection routes such as `/api/waitlist`
 - `/api/graphql` and `/api/graphql-playground` - Payload GraphQL API
 
 ## Stripe notes
@@ -54,6 +54,8 @@ Prefer restricted API keys for production Stripe server routes and keep all secr
 ## Payload notes
 
 `payload.config.ts` and `src/lib/payload/collections.ts` define the CMS schema from the specification: admins, waitlist, members, spaces, posts, comments, journal, events, recommendations, Concierge requests, Concierge knowledge base, drops, reports, and media.
+
+Payload runs inside the Next app under the `(payload)` route group. The product waitlist handler intentionally lives at `/api/app/waitlist` so it does not shadow Payload's REST collection endpoint at `/api/waitlist`.
 
 Once Supabase PostgreSQL and Payload are configured, the route handlers persist to the relevant collections and use the Member record to enforce:
 

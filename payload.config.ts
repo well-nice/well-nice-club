@@ -6,13 +6,8 @@ import { collections } from "./src/lib/payload/collections.ts";
 const databaseURL = process.env.DATABASE_URL;
 const payloadSecret = process.env.PAYLOAD_SECRET;
 
-if (!databaseURL) {
-  throw new Error("DATABASE_URL is required for Payload.");
-}
-
-if (!payloadSecret) {
-  throw new Error("PAYLOAD_SECRET is required for Payload.");
-}
+const fallbackDatabaseURL = "postgresql://payload:payload@127.0.0.1:5432/payload";
+const fallbackPayloadSecret = "development-payload-secret";
 
 export default buildConfig({
   admin: {
@@ -25,12 +20,12 @@ export default buildConfig({
   collections,
   db: postgresAdapter({
     pool: {
-      connectionString: databaseURL
+      connectionString: databaseURL || fallbackDatabaseURL
     },
     push: process.env.PAYLOAD_DB_PUSH === "true"
   }),
   editor: lexicalEditor(),
-  secret: payloadSecret,
+  secret: payloadSecret || fallbackPayloadSecret,
   typescript: {
     outputFile: "src/payload-types.ts"
   }

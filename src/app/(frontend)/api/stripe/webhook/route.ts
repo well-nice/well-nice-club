@@ -104,7 +104,7 @@ async function upsertMembershipFromStripe(update: MembershipUpdate) {
     });
   }
 
-  if (isBillingStatusSource(update.statusSource) && (update.stripeCustomerId || update.stripeSubscriptionId)) {
+  if (isBillingStatusSource(update.statusSource) && !update.clerkUserId && (update.stripeCustomerId || update.stripeSubscriptionId)) {
     throw new UnmappedStripeMemberError(update.stripeCustomerId, update.stripeSubscriptionId);
   }
 

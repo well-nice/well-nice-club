@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Show, UserButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 
 export function PublicHeader() {
@@ -13,12 +14,20 @@ export function PublicHeader() {
         <Link href="/app">Preview app</Link>
       </nav>
       <div className="flex items-center gap-2">
-        <Button asChild size="sm" variant="ghost">
-          <Link href="/sign-in">Sign in</Link>
-        </Button>
-        <Button asChild size="sm">
-          <Link href="/join">Join</Link>
-        </Button>
+        <Show when="signed-out">
+          <Button asChild size="sm" variant="ghost">
+            <Link href="/sign-in">Sign in</Link>
+          </Button>
+          <Button asChild size="sm">
+            <Link href="/join">Join</Link>
+          </Button>
+        </Show>
+        <Show when="signed-in">
+          <Button asChild size="sm" variant="ghost">
+            <Link href="/app">Enter app</Link>
+          </Button>
+          <UserButton />
+        </Show>
       </div>
     </header>
   );
